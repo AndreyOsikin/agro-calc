@@ -23,7 +23,7 @@
       box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
       padding: 24px;
       width: 100%;
-      max-width: 700px;
+      max-width: 800px;
       transition: transform 0.3s ease;
     }
 
@@ -35,7 +35,9 @@
       font-weight: bold;
     }
 
-    .top-parameter-group {
+    /* Верхние параметры */
+    .top-parameter-group,
+    .top-parameter-double {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
@@ -48,12 +50,13 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100px;
+      height: 90px;
       padding: 10px;
       border-radius: 12px;
       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s ease, box-shadow 0.3s ease;
       backface-visibility: hidden;
+      cursor: default;
     }
 
     .tooltip {
@@ -84,7 +87,8 @@
       border-color: #333 transparent transparent transparent;
     }
 
-    .top-parameter-item:hover .tooltip {
+    .top-parameter-item:hover .tooltip,
+    .option-group:hover .tooltip {
       opacity: 1;
       visibility: visible;
     }
@@ -94,10 +98,13 @@
       box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
     }
 
-    .milk-price-frame { background: linear-gradient(135deg, #cceeff, #a8d8ff); }
-    .payback-frame { background: linear-gradient(135deg, #e8faff, #b3f0ff); }
+    /* Цвета верхних блоков */
+    .milk-price-frame { background: linear-gradient(135deg, #aeeaff, #8cd6ff); }
+    .payback-frame { background: linear-gradient(135deg, #e6f7ff, #b3ecff); }
     .herd-size-frame { background: linear-gradient(135deg, #f0f0ff, #d8d8ff); }
     .farm-count-frame { background: linear-gradient(135deg, #ffebe6, #ffd9d9); }
+    .milking-herd-frame { background: linear-gradient(135deg, #fef0dd, #fffbd7); }
+    .daily-yield-frame { background: linear-gradient(135deg, #dfffd8, #ecffd5); }
 
     .top-parameter-item span {
       font-size: 1.2em;
@@ -133,28 +140,71 @@
       text-align: center;
     }
 
+    /* Модульные блоки */
     .module-block {
       padding: 12px;
       margin-bottom: 12px;
       border-radius: 10px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: default;
+      overflow: hidden;
+      position: relative;
     }
 
-    .agrointellect-block { background: linear-gradient(135deg, #cceeff, #e7f3ff); }
-    .musoft-block { background: linear-gradient(135deg, #e7f3ff, #f0f0ff); }
-    .milk-tracking-block { background: linear-gradient(135deg, #f0f0ff, #ffebe6); }
+    /* Анимация фона группы при наведении */
+    .module-block::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 0;
+    }
 
+    .module-block:hover::before {
+      opacity: 1;
+    }
+
+    .agrointellect-block {
+      background: linear-gradient(135deg, #cceeff, #e8faff);
+    }
+
+    .musoft-block {
+      background: linear-gradient(135deg, #e8faff, #f0f0ff);
+    }
+
+    .milk-tracking-block {
+      background: linear-gradient(135deg, #f0f0ff, #ffebe6);
+    }
+
+    /* Строки внутри модулей */
     .option-group {
+      position: relative;
+      z-index: 1;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 6px 10px;
+      padding: 8px 12px;
       background: linear-gradient(135deg, #eef8ff, #ffffff);
       border-radius: 8px;
       margin-bottom: 6px;
-      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .option-group:hover {
+      background: linear-gradient(135deg, #def7ff, #ffffff);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .option-group.active {
+      background: linear-gradient(135deg, #c0eaff, #a0daff);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.2);
     }
 
     .checkbox-custom {
@@ -169,7 +219,7 @@
     }
 
     .checkbox-custom:checked {
-      background-color: #25d422;
+      background-color: #007AFF;
       transform: scale(1.2);
     }
 
@@ -183,15 +233,10 @@
       transform: translate(-50%, -50%);
     }
 
-    .required::after {
-      content: " (обязательно)";
-      color: red;
-      font-size: 0.8em;
-    }
-
+    /* Месяцы и Скидка (%) */
     .input-group.purple-border,
     .discount-group {
-      background: linear-gradient(135deg, #cebbff, #e8faff);
+      background: linear-gradient(135deg, #cceeff, #e8faff);
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -208,6 +253,37 @@
       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
+    .discount-controls {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .discount-controls input[type="number"] {
+      width: 60px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      text-align: center;
+      background: linear-gradient(135deg, #cceeff, #e8faff);
+      font-size: 0.9em;
+      transition: background 0.3s ease;
+    }
+
+    .discount-controls input[type="number"]:focus {
+      background: linear-gradient(135deg, #b3ecff, #e0f7ff);
+    }
+
+    /* Месяцы */
+    .input-group.purple-border input[type="range"],
+    .discount-group input[type="range"] {
+      width: 100%;
+      margin-top: 8px;
+    }
+
     .monthly-price-frame {
       background: linear-gradient(135deg, #a8fca8, #e0ffe0);
     }
@@ -222,36 +298,42 @@
       color: #1a4d1a;
     }
 
-    button.share-button {
-      margin-top: 20px;
-      padding: 12px 20px;
-      border-radius: 10px;
-      background: #4facfe;
-      color: white;
-      font-size: 1em;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      max-width: 300px;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: background 0.3s ease;
-    }
-
-    button.share-button:hover {
-      background: #3c9cf5;
-    }
-
     @media (max-width: 600px) {
-      .top-parameter-group {
+      .top-parameter-group,
+      .top-parameter-double {
         grid-template-columns: 1fr;
+      }
+
+      .discount-controls {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .discount-controls input[type="number"] {
+        margin-top: 8px;
+        margin-left: auto;
+      }
+
+      .option-group {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .checkbox-custom {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
       }
     }
   </style>
 </head>
 <body>
   <div class="calculator-container">
+
+    <!-- Заголовок -->
     <h2>AGROINTELLECT</h2>
 
     <!-- Верхние параметры -->
@@ -262,9 +344,9 @@
         <div class="tooltip">Введите цену за литр молока</div>
       </div>
       <div class="top-parameter-item payback-frame">
-        <label>Окупаемость:</label>
-        <span id="payback">∞</span> кг
-        <div class="tooltip">Количество молока для окупаемости</div>
+        <label>Необходимо молока:</label>
+        <span id="payback">∞</span> кг/мес
+        <div class="tooltip">Количество молока для окупаемости подписки</div>
       </div>
       <div class="top-parameter-item herd-size-frame">
         <label for="herd-size">Поголовье:</label>
@@ -277,7 +359,7 @@
             <option value="1800+">1800+</option>
           </select>
         </span>
-        <div class="tooltip">Выберите диапазон поголовья</div>
+        <div class="tooltip">Выберите диапазон поголовья вашей фермы</div>
       </div>
       <div class="top-parameter-item farm-count-frame">
         <label for="farm-count">Фермы:</label>
@@ -286,73 +368,102 @@
       </div>
     </div>
 
-    <!-- Модули AGROINTELLECT -->
+    <!-- Два новых блока рядом -->
+    <div class="top-parameter-double">
+      <div class="top-parameter-item milking-herd-frame">
+        <label for="milking-herd">Дойное поголовье:</label>
+        <span id="milking-herd-display">
+          <input type="number" id="milking-herd" value="1" min="1" oninput="calculateTotal()" style="
+            font-size: 0.9em;
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+            text-align: center;
+            background-color: inherit;
+            width: 100%;
+            max-width: 130px;">
+        </span>
+        <div class="tooltip">Укажите количество дойных коров</div>
+      </div>
+      <div class="top-parameter-item daily-yield-frame">
+        <label>Необходимое увеличение надоя:</label>
+        <span id="daily-yield">∞</span> кг/сутки
+        <div class="tooltip">На сколько повысить суточный надой</div>
+      </div>
+    </div>
+
+    <!-- Группа 1: AGROINTELLECT -->
     <div class="module-block agrointellect-block">
-      <div class="option-group">
-        <label title="AGROINTELLECT: полный модуль управления животноводством">AGROINTELLECT</label>
-        <input type="checkbox" id="management-accounting" class="checkbox-custom" onchange="calculateTotal()">
+      <div class="option-group" data-option="management-accounting">
+        <label title="AGROINTELLECT: полный модуль управления животноводством">AGROINTELLECT <span style="font-size: 0.8em; color: gray;">(Все включено)</span></label>
+        <input type="checkbox" id="management-accounting" class="checkbox-custom" onchange="handleOptionChange(this)">
       </div>
-      <div class="option-group">
-        <label class="required" title="Обязательный модуль">Веб + ТГ-уведомления</label>
-        <input type="checkbox" id="web-tg-notifications" class="checkbox-custom" checked onchange="calculateTotal()">
+      <div class="option-group" data-option="web-tg-notifications">
+        <label title="Обязательный модуль">Веб + ТГ-уведомления</label>
+        <input type="checkbox" id="web-tg-notifications" class="checkbox-custom" checked onchange="handleOptionChange(this)">
       </div>
-      <div class="option-group">
+      <div class="option-group" data-option="reproduction-reports">
         <label title="Отчеты по воспроизводству, Excel, Telegram-уведомления">Воспроизводство</label>
-        <input type="checkbox" id="reproduction-reports" class="checkbox-custom" onchange="calculateTotal()">
+        <input type="checkbox" id="reproduction-reports" class="checkbox-custom" onchange="handleOptionChange(this)">
       </div>
-      <div class="option-group">
+      <div class="option-group" data-option="feeding-reports">
         <label title="Отчёты по кормлению животных">Кормление</label>
-        <input type="checkbox" id="feeding-reports" class="checkbox-custom" onchange="calculateTotal()">
+        <input type="checkbox" id="feeding-reports" class="checkbox-custom" onchange="handleOptionChange(this)">
       </div>
-      <div class="option-group">
+      <div class="option-group" data-option="hoof-treatment-reports">
         <label title="Отчёты по лечению, расчистке копыт и маститу">Лечение</label>
-        <input type="checkbox" id="hoof-treatment-reports" class="checkbox-custom" onchange="calculateTotal()">
+        <input type="checkbox" id="hoof-treatment-reports" class="checkbox-custom" onchange="handleOptionChange(this)">
       </div>
     </div>
 
-    <!-- Модули MUSOFT -->
+    <!-- Группа 2: MUSOFT -->
     <div class="module-block musoft-block">
-      <div class="option-group">
-        <label title="MUSOFT: система управления поголовьем">MUSOFT</label>
-        <input type="checkbox" id="herd-management" class="checkbox-custom" onchange="calculateTotal()">
+      <div class="option-group" data-option="herd-management">
+        <label title="MUSOFT: система управления поголовьем">MUSOFT <span style="font-size: 0.8em; color: gray;">(Все включено)</span></label>
+        <input type="checkbox" id="herd-management" class="checkbox-custom" onchange="handleOptionChange(this)">
       </div>
-      <div class="option-group">
-        <label class="required" title="Обязательный модуль">Учет поголовья</label>
-        <input type="checkbox" id="cattle-management" class="checkbox-custom" checked onchange="calculateTotal()">
+      <div class="option-group" data-option="cattle-management">
+        <label title="Обязательный модуль">Учет поголовья</label>
+        <input type="checkbox" id="cattle-management" class="checkbox-custom" onchange="handleOptionChange(this)">
       </div>
-      <div class="option-group">
+      <div class="option-group" data-option="reproduction">
         <label title="Зоотехнические отчёты и рекомендации">Зоотехния</label>
-        <input type="checkbox" id="reproduction" class="checkbox-custom" onchange="calculateTotal()">
+        <input type="checkbox" id="reproduction" class="checkbox-custom" onchange="handleOptionChange(this)">
       </div>
-      <div class="option-group">
+      <div class="option-group" data-option="treatment">
         <label title="Ветеринарные отчёты и профилактика">Ветеринария</label>
-        <input type="checkbox" id="treatment" class="checkbox-custom" onchange="calculateTotal()">
+        <input type="checkbox" id="treatment" class="checkbox-custom" onchange="handleOptionChange(this)">
       </div>
-      <div class="option-group">
+      <div class="option-group" data-option="milking-integration">
         <label title="Интеграция с доильным оборудованием">Интеграция с оборудованием</label>
-        <input type="checkbox" id="milking-integration" class="checkbox-custom" onchange="calculateTotal()">
+        <input type="checkbox" id="milking-integration" class="checkbox-custom" onchange="handleOptionChange(this)">
       </div>
     </div>
 
+    <!-- Группа 3: Учет молока -->
     <div class="module-block milk-tracking-block">
-      <div class="option-group">
+      <div class="option-group" data-option="milk-tracking">
         <label title="Система учета молока">Учет молока</label>
-        <input type="checkbox" id="milk-tracking" class="checkbox-custom" onchange="calculateTotal()">
+        <input type="checkbox" id="milk-tracking" class="checkbox-custom" onchange="handleOptionChange(this)">
       </div>
     </div>
 
     <!-- Месяцы -->
     <div class="input-group purple-border">
       <label for="months">Месяцы:</label>
-      <input type="range" id="months" min="1" max="24" step="1" value="1" oninput="updateMonthLabel(); calculateTotal()">
+      <input type="range" id="months" min="1" max="24" step="1" value="1" oninput="updateMonthLabel(); calculateTotal()" style="width: 100%;">
       <span id="month-label">1 месяц</span>
     </div>
 
     <!-- Скидка (%) -->
     <div class="discount-group">
       <label for="discount">Скидка (%):</label>
-      <input type="range" id="discount" min="0" max="100" step="1" value="0" oninput="calculateTotal()">
-      <span id="discount-label">0%</span>
+      <div class="discount-controls">
+        <input type="range" id="discount" min="0" max="100" step="1" value="0" oninput="updateDiscountInput(); calculateTotal()" style="flex: 1; width: 100%;">
+        <input type="number" id="discount-input" min="0" max="100" value="0" oninput="updateDiscountRange(); calculateTotal()">
+        <span id="discount-label">0%</span>
+      </div>
     </div>
 
     <!-- Итоговые параметры -->
@@ -367,8 +478,6 @@
       </div>
     </div>
 
-    <!-- Кнопка отправки результата в Telegram -->
-    <button onclick="sendDataToBot()" class="share-button">Поделиться результатом</button>
   </div>
 
   <!-- Подключение Telegram WebApp API -->
@@ -393,8 +502,10 @@
       const months = parseInt(document.getElementById("months").value);
       const discount = parseFloat(document.getElementById("discount").value) / 100;
       const milkPrice = parseFloat(document.getElementById("milk-price").value) || 0;
+      const milkingHerd = parseInt(document.getElementById("milking-herd").value) || 1;
 
       let totalPrice = 0;
+
       if (document.getElementById("milk-tracking").checked) totalPrice += prices[herdSize].milk;
       if (document.getElementById("herd-management").checked) totalPrice += prices[herdSize].herd;
       if (document.getElementById("cattle-management").checked) totalPrice += prices[herdSize].cattle;
@@ -408,9 +519,19 @@
       if (document.getElementById("hoof-treatment-reports").checked) totalPrice += prices[herdSize].hoofTreatment;
 
       const discountedPrice = totalPrice * farmCount * months * (1 - discount);
-      const payback = milkPrice > 0 ? (discountedPrice / milkPrice).toFixed(2) : '∞';
 
-      document.getElementById("payback").innerText = `${payback}`;
+      // Расчёт окупаемости
+      const paybackPerMonth = (milkPrice > 0 && months > 0)
+        ? (discountedPrice / milkPrice / months).toFixed(2)
+        : '∞';
+      document.getElementById("payback").innerText = `${paybackPerMonth}`;
+
+      // Расчёт надоя на голову
+      const dailyYield = (paybackPerMonth !== '∞' && milkingHerd > 0)
+        ? (paybackPerMonth / 31 / milkingHerd).toFixed(2)
+        : '∞';
+
+      document.getElementById("daily-yield").innerText = dailyYield;
       document.getElementById("total-price").innerText = discountedPrice.toLocaleString();
       document.getElementById("monthly-price").innerText = (months > 0 ? (discountedPrice / months).toLocaleString() : "0");
       document.getElementById("discount-label").innerText = `${Math.round(discount * 100)}%`;
@@ -421,31 +542,33 @@
       document.getElementById("month-label").textContent = months + ' ' + (months == 1 ? 'месяц' : 'месяцев');
     }
 
-    function sendDataToBot() {
-      const totalPrice = document.getElementById("total-price").innerText;
-      const monthlyPrice = document.getElementById("monthly-price").innerText;
-
-      if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.sendData) {
-        const dataToSend = JSON.stringify({
-          total: totalPrice,
-          monthly: monthlyPrice,
-          herdSize: document.getElementById("herd-size").value,
-          farmCount: document.getElementById("farm-count").value,
-          months: document.getElementById("months").value,
-          discount: document.getElementById("discount-label").innerText
-        });
-
-        window.Telegram.WebApp.sendData(dataToSend);
-      } else {
-        alert(`Итоговая цена: ${totalPrice} руб.\nЦена за месяц: ${monthlyPrice} руб.`);
-      }
+    function updateDiscountInput() {
+      const range = document.getElementById("discount").value;
+      document.getElementById("discount-input").value = range;
+      calculateTotal();
     }
 
-    // Привязываем события ко всем полям
-    document.querySelectorAll('input[type="checkbox"], input[type="number"], input[type="range"], select').forEach(input => {
-      ['input', 'change'].forEach(event => {
-        input.addEventListener(event, calculateTotal);
-      });
+    function updateDiscountRange() {
+      const input = document.getElementById("discount-input").value;
+      document.getElementById("discount").value = input;
+      calculateTotal();
+    }
+
+    function handleOptionChange(inputElement) {
+      const optionGroup = inputElement.closest('.option-group');
+      if (!optionGroup) return;
+      optionGroup.classList.toggle('active', inputElement.checked);
+      calculateTotal();
+    }
+
+    // Привязываем события ко всем чекбоксам
+    document.querySelectorAll('.option-group').forEach(group => {
+      const checkbox = group.querySelector('input[type="checkbox"]');
+      if (checkbox) {
+        checkbox.addEventListener('change', () => {
+          group.classList.toggle('active', checkbox.checked);
+        });
+      }
     });
 
     calculateTotal();
